@@ -1,8 +1,29 @@
+<div align="right">
+
+**English** | [中文](README.zh-CN.md)
+
+</div>
+
+<div align="center">
+
 # Claude Code Memory & Reminder Skill
 
-Persistent tiered memory and reminder notebook for [Claude Code](https://claude.com/claude-code) — so your assistant actually remembers what matters and gently reminds you of things you promised yourself.
+**Persistent tiered memory & reminder notebook for [Claude Code](https://claude.com/claude-code).**
 
-**中文说明**: [README.zh-CN.md](README.zh-CN.md)
+So your assistant actually remembers what matters and gently reminds you of things you promised yourself.
+
+[![ShellCheck](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/moyunliuyin/claude-memory-reminder)](https://github.com/moyunliuyin/claude-memory-reminder/releases)
+[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet)](https://claude.com/claude-code)
+
+```bash
+git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
+```
+
+</div>
+
+---
 
 ## Features
 

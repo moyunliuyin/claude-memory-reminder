@@ -1,8 +1,29 @@
+<div align="right">
+
+[English](README.md) | **中文**
+
+</div>
+
+<div align="center">
+
 # Claude Code 分级记忆与记事本 Skill
 
-为 [Claude Code](https://claude.com/claude-code) 提供**持久化分级记忆**和**提醒记事本**：会话启动时自动整理记忆边界、在对话里用人话增删提醒，不再让 Claude 每次把你当陌生人。
+**为 [Claude Code](https://claude.com/claude-code) 提供持久化分级记忆与提醒记事本。**
 
-**English**: [README.md](README.md)
+会话启动时自动整理记忆边界、在对话里用人话增删提醒，不再让 Claude 每次把你当陌生人。
+
+[![ShellCheck](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/moyunliuyin/claude-memory-reminder)](https://github.com/moyunliuyin/claude-memory-reminder/releases)
+[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet)](https://claude.com/claude-code)
+
+```bash
+git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
+```
+
+</div>
+
+---
 
 ## 功能
 
