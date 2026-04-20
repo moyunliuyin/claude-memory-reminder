@@ -26,7 +26,7 @@
 ### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/USER/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
+git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
 ```
 
 （可放任意位置；hook 脚本通过 `CMR_SKILL_DIR` 环境变量支持自定义路径。）

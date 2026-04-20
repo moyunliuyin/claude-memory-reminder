@@ -26,7 +26,7 @@ The report is driven by rules in `MEMORY.md` (a tier policy + Startup Protocol) 
 ### 1. Clone
 
 ```bash
-git clone https://github.com/USER/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
+git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
 ```
 
 (Use any local path; the hook auto-locates config via `CMR_SKILL_DIR` env var if you pick a non-default location.)
