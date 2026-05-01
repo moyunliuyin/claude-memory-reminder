@@ -8,14 +8,14 @@
 
 # Claude Code Memory & Reminder Skill
 
-**Persistent tiered memory & reminder notebook for [Claude Code](https://claude.com/claude-code).**
+**Persistent tiered memory & reminder notebook for [Claude Code](https://claude.com/claude-code) and [OpenAI Codex CLI](https://github.com/openai/codex).**
 
 So your assistant actually remembers what matters and gently reminds you of things you promised yourself.
 
 [![ShellCheck](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/moyunliuyin/claude-memory-reminder)](https://github.com/moyunliuyin/claude-memory-reminder/releases)
-[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet)](https://claude.com/claude-code)
+[![Platforms](https://img.shields.io/badge/platforms-Claude%20Code%20%7C%20Codex%20CLI-blueviolet)](#install-for-codex-cli)
 
 ```bash
 git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
@@ -42,7 +42,7 @@ Every Claude Code session runs a `SessionStart` hook that either:
 
 The report is driven by rules in `MEMORY.md` (a tier policy + Startup Protocol) and condition entries in `reminders.md`.
 
-## Install
+## Install for Claude Code
 
 ### 1. Clone
 
@@ -110,6 +110,41 @@ Tier check:
   Reminders (2): ⚠️ Today - annual check-up; 🔁 on-demand - try new memory system
 Suggested: none
 ```
+
+## Install for Codex CLI
+
+Codex has no SessionStart hook → memory-reminder runs as a manual AGENTS.md "Session Startup" instruction (the main agent self-executes).
+
+```bash
+git clone https://github.com/moyunliuyin/claude-memory-reminder.git
+cd claude-memory-reminder
+bash install.sh codex
+```
+
+```powershell
+git clone https://github.com/moyunliuyin/claude-memory-reminder.git
+cd claude-memory-reminder
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Target codex
+```
+
+The installer **only prints** manual steps; it does NOT modify your AGENTS.md.
+
+Manual steps it tells you to do:
+
+1. Copy the `## 1. Session Startup` block from [`codex/agents-md-startup-fragment.md`](codex/agents-md-startup-fragment.md) into your `~/.codex/AGENTS.md` section 1
+2. Copy templates to codex memories dir:
+
+   ```bash
+   mkdir -p ~/.codex/memories
+   cp templates/MEMORY.md ~/.codex/memories/MEMORY.md
+   cp templates/reminders.md ~/.codex/memories/reminders.md
+   ```
+
+3. Fill in MEMORY.md User Info / Preferences
+
+See [`codex/README.md`](codex/README.md) for the full guide and the CC-vs-Codex difference matrix.
+
+> **Note**: Codex relies on the main agent self-executing the AGENTS.md instruction every session. The 8h cooldown is best-effort (some sessions may skip if the model doesn't comply). Claude Code's hook is stricter in this regard.
 
 ## Local validation
 

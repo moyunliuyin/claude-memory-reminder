@@ -8,14 +8,14 @@
 
 # Claude Code 分级记忆与记事本 Skill
 
-**为 [Claude Code](https://claude.com/claude-code) 提供持久化分级记忆与提醒记事本。**
+**为 [Claude Code](https://claude.com/claude-code) 和 [OpenAI Codex CLI](https://github.com/openai/codex) 提供持久化分级记忆与提醒记事本。**
 
 会话启动时自动整理记忆边界、在对话里用人话增删提醒，不再让 Claude 每次把你当陌生人。
 
 [![ShellCheck](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/moyunliuyin/claude-memory-reminder/actions/workflows/shellcheck.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/moyunliuyin/claude-memory-reminder)](https://github.com/moyunliuyin/claude-memory-reminder/releases)
-[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet)](https://claude.com/claude-code)
+[![Platforms](https://img.shields.io/badge/platforms-Claude%20Code%20%7C%20Codex%20CLI-blueviolet)](#安装到-codex-cli)
 
 ```bash
 git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills/claude-memory-reminder
@@ -42,7 +42,7 @@ git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills
 
 报告逻辑由 `MEMORY.md` 里的规则（分级策略 + Startup Protocol）和 `reminders.md` 里的条目共同驱动。
 
-## 安装
+## 安装到 Claude Code
 
 ### 1. 克隆仓库
 
@@ -110,6 +110,41 @@ cp config.example.json config.json
   提醒 (2): ⚠️ 今日 - 年度体检; 🔁 常驻 - 试试新记忆系统
   建议: 无
 ```
+
+## 安装到 Codex CLI
+
+Codex 没有 SessionStart hook → memory-reminder 在 codex 上作为 AGENTS.md "Session Startup" 指令运行（主 agent 自觉执行）。
+
+```bash
+git clone https://github.com/moyunliuyin/claude-memory-reminder.git
+cd claude-memory-reminder
+bash install.sh codex
+```
+
+```powershell
+git clone https://github.com/moyunliuyin/claude-memory-reminder.git
+cd claude-memory-reminder
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Target codex
+```
+
+安装脚本**只打印**手动步骤，**不会自动改你的 AGENTS.md**。
+
+它会告诉你做这几件事：
+
+1. 把 [`codex/agents-md-startup-fragment.md`](codex/agents-md-startup-fragment.md) 里的 `## 1. Session Startup` 段复制到你的 `~/.codex/AGENTS.md` 第 1 节
+2. 复制模板到 codex memories 目录：
+
+   ```bash
+   mkdir -p ~/.codex/memories
+   cp templates/MEMORY.md ~/.codex/memories/MEMORY.md
+   cp templates/reminders.md ~/.codex/memories/reminders.md
+   ```
+
+3. 按需填写 MEMORY.md User Info / Preferences
+
+完整指南和"CC vs Codex 差异表"见 [`codex/README.md`](codex/README.md)。
+
+> **注意**：Codex 靠主 agent 每次会话自觉执行 AGENTS.md 指令，8h cooldown 是 best-effort（模型某次可能没跑）。Claude Code 的 hook 在这方面更严格。
 
 ## 本地验证
 
