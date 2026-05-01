@@ -31,7 +31,7 @@ git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills
 - **周期触发** — 每天边界检查；每月 1 号做 `verified` 复查；每月 15 号 + 最后一天提取模式
 - **记事本** — 对话里人话增删："5 月 10 号提醒我 X"、"X 搞定了"；支持 `[earliest:HH:MM]` 的时间段锁
 - **多窗口去重** — 时间戳锁（默认 8 小时），同时开多个 CLI 窗口只报告一次，每多一个窗口省 ~300-500 tokens
-- **零依赖** — hook 脚本只用 `bash` + `grep` + `date`。不需要 `jq`、不需要 Python
+- **运行时零依赖** — hook 脚本只用 `bash` + `grep` + `date`。本地验证可选使用 Python 和 ShellCheck
 
 ## 工作原理
 
@@ -111,6 +111,17 @@ cp config.example.json config.json
   建议: 无
 ```
 
+## 本地验证
+
+在仓库根目录运行：
+
+```bash
+bash scripts/validate.sh
+bash tests/test-session-start.sh
+```
+
+`validate.sh` 会检查必需文件、JSON 语法、shell 语法，并在 ShellCheck 可用时运行它。session-start 测试覆盖首次 `REQUIRED`、冷却期 `SKIP`、异常配置 fallback。
+
 ## 使用
 
 直接用人话对 Claude 讲就行：
@@ -142,12 +153,17 @@ cp config.example.json config.json
 
 ## 卸载
 
+卸载脚本只打印手动步骤，不会删除你的 `MEMORY.md` 或 `reminders.md` 数据：
+
 ```bash
-rm ~/.claude/hooks/session-start.sh
-rm -f ~/.claude/memory/.last-reminded
-# 手动删除 ~/.claude/settings.json 里的 "hooks" 块
-rm -rf ~/.claude/skills/claude-memory-reminder
+bash uninstall.sh
+# Windows PowerShell:
+powershell -File uninstall.ps1
 ```
+
+## 限制
+
+这个 skill 负责注入结构化的启动/提醒上下文，但不能强制模型遵守。cooldown 是本地文件锁，删除 `~/.claude/memory/.last-reminded` 后下一次会话会重新触发完整报告。
 
 ## 路线图
 

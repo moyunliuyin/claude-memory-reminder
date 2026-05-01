@@ -14,7 +14,10 @@ STAMP_FILE="${CMR_STAMP:-$HOME/.claude/memory/.last-reminded}"
 # Zero-dependency regex parse of cooldown_hours (default 8)
 COOLDOWN_HOURS=$(grep -oE '"cooldown_hours"[[:space:]]*:[[:space:]]*[0-9]+' "$CONFIG_FILE" 2>/dev/null \
     | grep -oE '[0-9]+$' \
-    || echo 8)
+    || true)
+case "$COOLDOWN_HOURS" in
+    ""|*[!0-9]*) COOLDOWN_HOURS=8 ;;
+esac
 COOLDOWN_SEC=$((COOLDOWN_HOURS * 3600))
 
 NOW=$(date +%s)

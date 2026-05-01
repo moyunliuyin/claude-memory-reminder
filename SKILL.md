@@ -23,6 +23,8 @@ description: |
 | `templates/MEMORY.md` | Memory rule skeleton (tiering, Startup Protocol, Reminders management) |
 | `templates/reminders.md` | Reminder notebook skeleton |
 | `config.example.json` | User-overridable parameters (cooldown/timeouts/trigger days) |
+| `scripts/validate.sh` | Local structure, JSON, shell syntax, and optional ShellCheck validation |
+| `tests/test-session-start.sh` | Local smoke test for REQUIRED/SKIP cooldown behavior |
 
 ## Core rules / 核心规则
 
@@ -52,6 +54,13 @@ First session in cooldown window → full report and writes a stamp file. Subseq
 
 See `README.md` / `README.zh-CN.md`.
 
+## Local validation
+
+```bash
+bash scripts/validate.sh
+bash tests/test-session-start.sh
+```
+
 ## Config (all optional)
 
 ```json
@@ -67,3 +76,7 @@ See `README.md` / `README.zh-CN.md`.
 ## Zero-dependency constraint / 零依赖
 
 The hook script uses only POSIX `bash` + `grep` + `date`. `jq` is **not** required — `cooldown_hours` is parsed via regex. All other config fields are interpreted by Claude directly reading the JSON.
+
+## Limitations / 限制
+
+This skill injects structured startup/reminder context; it cannot force model compliance. Cooldown is local and file-based, so deleting the stamp file makes the next session run the full report again.

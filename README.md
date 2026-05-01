@@ -31,7 +31,7 @@ git clone https://github.com/moyunliuyin/claude-memory-reminder ~/.claude/skills
 - **Scheduled triggers** — daily boundary check; monthly `verified` refresh (default: 1st); twice-monthly pattern extraction (default: 15th + last day)
 - **Reminder notebook** — add / complete / cancel via natural language in chat ("remind me to X on May 10", "X done"); supports `[earliest:HH:MM]` for time-of-day gating
 - **Multi-window dedup** — a cooldown stamp (default 8h) prevents repeated reports across parallel CLI windows; saves ~300–500 tokens per extra window
-- **Zero dependencies** — the hook script uses only `bash` + `grep` + `date`. No `jq`, no Python
+- **Zero dependencies at runtime** — the hook script uses only `bash` + `grep` + `date`. Local validation can optionally use Python and ShellCheck
 
 ## How it works
 
@@ -111,6 +111,17 @@ Tier check:
 Suggested: none
 ```
 
+## Local validation
+
+Run these from the repository root:
+
+```bash
+bash scripts/validate.sh
+bash tests/test-session-start.sh
+```
+
+`validate.sh` checks required files, JSON syntax, shell syntax, and ShellCheck when available. The session-start test covers first-run `REQUIRED`, cooldown `SKIP`, and malformed-config fallback.
+
 ## Usage
 
 Just talk naturally. Claude recognizes intent and updates the files:
@@ -142,12 +153,17 @@ Only `cooldown_hours` is read by the hook itself (via regex). All other fields a
 
 ## Uninstall
 
+The uninstall scripts only print manual steps and never delete your `MEMORY.md` or `reminders.md` data:
+
 ```bash
-rm ~/.claude/hooks/session-start.sh
-rm -f ~/.claude/memory/.last-reminded
-# Remove the "hooks" block from ~/.claude/settings.json manually
-rm -rf ~/.claude/skills/claude-memory-reminder
+bash uninstall.sh
+# Windows PowerShell:
+powershell -File uninstall.ps1
 ```
+
+## Limitations
+
+This skill injects structured startup/reminder context; it cannot force model compliance. Cooldown is local and file-based, so deleting `~/.claude/memory/.last-reminded` makes the next session run the full report again.
 
 ## Roadmap
 
